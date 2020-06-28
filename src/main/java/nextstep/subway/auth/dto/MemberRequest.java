@@ -1,5 +1,7 @@
 package nextstep.subway.auth.dto;
 
+import nextstep.subway.auth.domain.Member;
+
 public class MemberRequest {
     private String email;
     private String password;
@@ -24,5 +26,9 @@ public class MemberRequest {
 
     public Integer getAge() {
         return age;
+    }
+
+    public Member toMember() {
+        return new Member(email, password, age);
     }
 }

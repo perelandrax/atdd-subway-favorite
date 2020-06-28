@@ -22,9 +22,9 @@ public class MemberController {
         return ResponseEntity.created(URI.create("/members/" + member.getId())).build();
     }
 
-    @GetMapping("/members")
-    public ResponseEntity<MemberResponse> getMemberByEmail(@RequestParam String email) {
-        MemberResponse member = memberService.findMemberByEmail(email);
+    @GetMapping("/members/{id}")
+    public ResponseEntity<MemberResponse> getMemberByEmail(@PathVariable Long id) {
+        MemberResponse member = memberService.findMemberById(id);
         return ResponseEntity.ok().body(member);
     }
 

@@ -1,5 +1,7 @@
 package nextstep.subway.auth.dto;
 
+import nextstep.subway.auth.domain.Member;
+
 public class MemberResponse {
     private Long id;
     private String email;
@@ -11,9 +13,9 @@ public class MemberResponse {
         this.age = age;
     }
 
-//    public static MemberResponse of(Member member) {
-//        return new MemberResponse(member.getId(), member.getEmail(), member.getName());
-//    }
+    public static MemberResponse of(Member member) {
+        return new MemberResponse(member.getId(), member.getEmail(), member.getAge());
+    }
 
     public Long getId() {
         return id;

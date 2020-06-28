@@ -24,7 +24,6 @@ public class MemberAcceptanceStep {
 
         return RestAssured.given().log().all().
                 contentType(MediaType.APPLICATION_JSON_VALUE).
-                accept(MediaType.APPLICATION_JSON_VALUE).
                 body(params).
                 when().
                 post("/members").
@@ -33,31 +32,42 @@ public class MemberAcceptanceStep {
                 extract();
     }
 
-    public static ExtractableResponse<Response> 회원_정보_조회_요청() {
+    public static ExtractableResponse<Response> 회원_정보_조회_요청(ExtractableResponse<Response> response) {
+        Long memberId = Long.parseLong(response.header("Location").split("/")[2]);
+
         return RestAssured.given().log().all().
                 accept(MediaType.APPLICATION_JSON_VALUE).
                 when().
-                get("/members").
+                get("/members/{memberId}", memberId).
                 then().
                 log().all().
                 extract();
     }
 
-    public static ExtractableResponse<Response> 회원_정보_수정_요청() {
+    public static ExtractableResponse<Response> 회원_정보_수정_요청(ExtractableResponse<Response> response, String email, String password, Integer age) {
+        Long memberId = Long.parseLong(response.header("Location").split("/")[2]);
+
+        Map<String, String> params = new HashMap<>();
+        params.put("email", email);
+        params.put("password", password);
+        params.put("age", age + "");
+
         return RestAssured.given().log().all().
-                accept(MediaType.APPLICATION_JSON_VALUE).
+                contentType(MediaType.APPLICATION_JSON_VALUE).
+                body(params).
                 when().
-                put("/members").
+                put("/members/{memberId}", memberId).
                 then().
                 log().all().
                 extract();
     }
 
-    public static ExtractableResponse<Response> 회원_삭제_요청() {
+    public static ExtractableResponse<Response> 회원_삭제_요청(ExtractableResponse<Response> response) {
+        Long memberId = Long.parseLong(response.header("Location").split("/")[2]);
+
         return RestAssured.given().log().all().
-                accept(MediaType.APPLICATION_JSON_VALUE).
                 when().
-                delete("/members").
+                delete("/members/{memberId}", memberId).
                 then().
                 log().all().
                 extract();
