@@ -3,6 +3,9 @@ package nextstep.subway.auth.acceptance;
 import io.restassured.RestAssured;
 import io.restassured.authentication.FormAuthConfig;
 import nextstep.subway.AcceptanceTest;
+import nextstep.subway.auth.dto.MemberResponse;
+import nextstep.subway.auth.dto.TokenResponse;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -14,40 +17,45 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AuthAcceptanceTest extends AcceptanceTest {
+    private static final String EMAIL = "email@email.com";
+    private static final String PASSWORD = "password";
+    private static final Integer AGE = 20;
+
     @DisplayName("Basic Auth")
     @Test
     void myInfoWithBasicAuth() {
-        createMember(TEST_USER_EMAIL, TEST_USER_NAME, TEST_USER_PASSWORD);
+        createMember(EMAIL, PASSWORD, AGE);
 
-        MemberResponse memberResponse = myInfoWithBasicAuth(TEST_USER_EMAIL, TEST_USER_PASSWORD);
+        MemberResponse memberResponse = myInfoWithBasicAuth(EMAIL, PASSWORD);
 
         assertThat(memberResponse.getId()).isNotNull();
-        assertThat(memberResponse.getEmail()).isEqualTo(TEST_USER_EMAIL);
-        assertThat(memberResponse.getName()).isEqualTo(TEST_USER_NAME);
+        assertThat(memberResponse.getEmail()).isEqualTo(EMAIL);
+        assertThat(memberResponse.getAge()).isEqualTo(AGE);
     }
+
 
     @DisplayName("Session")
     @Test
     void myInfoWithSession() {
-        createMember(TEST_USER_EMAIL, TEST_USER_NAME, TEST_USER_PASSWORD);
+        createMember(EMAIL, PASSWORD, AGE);
 
-        MemberResponse memberResponse = myInfoWithSession(TEST_USER_EMAIL, TEST_USER_PASSWORD);
+        MemberResponse memberResponse = myInfoWithSession(EMAIL, PASSWORD);
 
         assertThat(memberResponse.getId()).isNotNull();
-        assertThat(memberResponse.getEmail()).isEqualTo(TEST_USER_EMAIL);
-        assertThat(memberResponse.getName()).isEqualTo(TEST_USER_NAME);
+        assertThat(memberResponse.getEmail()).isEqualTo(EMAIL);
+        assertThat(memberResponse.getAge()).isEqualTo(AGE);
     }
 
     @DisplayName("Bearer Auth")
     @Test
     void myInfoWithBearerAuth() {
-        createMember(TEST_USER_EMAIL, TEST_USER_NAME, TEST_USER_PASSWORD);
-        TokenResponse tokenResponse = login(TEST_USER_EMAIL, TEST_USER_PASSWORD);
+        createMember(EMAIL, PASSWORD, AGE);
+        TokenResponse tokenResponse = login(EMAIL, PASSWORD);
 
         MemberResponse memberResponse = myInfoWithBearerAuth(tokenResponse);
         assertThat(memberResponse.getId()).isNotNull();
-        assertThat(memberResponse.getEmail()).isEqualTo(TEST_USER_EMAIL);
-        assertThat(memberResponse.getName()).isEqualTo(TEST_USER_NAME);
+        assertThat(memberResponse.getEmail()).isEqualTo(EMAIL);
+        assertThat(memberResponse.getAge()).isEqualTo(AGE);
     }
 
     public MemberResponse myInfoWithBasicAuth(String email, String password) {
@@ -107,11 +115,11 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                         extract().as(TokenResponse.class);
     }
 
-    public String createMember(String email, String name, String password) {
+    public String createMember(String email, String password, Integer age) {
         Map<String, String> params = new HashMap<>();
         params.put("email", email);
-        params.put("name", name);
         params.put("password", password);
+        params.put("age", age + "");
 
         return
                 RestAssured.given().log().all().
