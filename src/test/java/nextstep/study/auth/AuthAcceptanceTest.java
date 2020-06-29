@@ -1,24 +1,45 @@
-package nextstep.subway.member.acceptance;
+package nextstep.study.auth;
 
 import io.restassured.RestAssured;
 import io.restassured.authentication.FormAuthConfig;
 import nextstep.subway.AcceptanceTest;
+import nextstep.subway.SubwayApplication;
 import nextstep.subway.member.dto.MemberResponse;
 import nextstep.subway.member.dto.TokenResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ContextConfiguration(classes = SubwayApplication.class)
 public class AuthAcceptanceTest extends AcceptanceTest {
     private static final String EMAIL = "email@email.com";
     private static final String PASSWORD = "password";
     private static final Integer AGE = 20;
+
+    @DisplayName("Session")
+    @Test
+    void myInfoWithSession() {
+        회원_등록되어_있음(EMAIL, PASSWORD, AGE);
+
+        MemberResponse memberResponse = RestAssured.given().log().all().
+                auth().form(EMAIL, PASSWORD, new FormAuthConfig("/login/session", "email", "password")).
+                accept(MediaType.APPLICATION_JSON_VALUE).
+                when().
+                get("/me/session").
+                then().
+                log().all().
+                statusCode(HttpStatus.OK.value()).
+                extract().as(MemberResponse.class);
+
+        회원_정보_응답됨(memberResponse);
+    }
 
     @DisplayName("Basic Auth")
     @Test
@@ -35,31 +56,9 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 statusCode(HttpStatus.OK.value()).
                 extract().as(MemberResponse.class);
 
-        assertThat(memberResponse.getId()).isNotNull();
-        assertThat(memberResponse.getEmail()).isEqualTo(EMAIL);
-        assertThat(memberResponse.getAge()).isEqualTo(AGE);
+        회원_정보_응답됨(memberResponse);
     }
 
-
-    @DisplayName("Session")
-    @Test
-    void myInfoWithSession() {
-        회원_등록되어_있음(EMAIL, PASSWORD, AGE);
-
-        MemberResponse memberResponse = RestAssured.given().log().all().
-                auth().form(EMAIL, PASSWORD, new FormAuthConfig("/login", "email", "password")).
-                accept(MediaType.APPLICATION_JSON_VALUE).
-                when().
-                get("/me/session").
-                then().
-                log().all().
-                statusCode(HttpStatus.OK.value()).
-                extract().as(MemberResponse.class);
-
-        assertThat(memberResponse.getId()).isNotNull();
-        assertThat(memberResponse.getEmail()).isEqualTo(EMAIL);
-        assertThat(memberResponse.getAge()).isEqualTo(AGE);
-    }
 
     @DisplayName("Bearer Auth")
     @Test
@@ -68,9 +67,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
         TokenResponse tokenResponse = login(EMAIL, PASSWORD);
 
         MemberResponse memberResponse = myInfoWithBearerAuth(tokenResponse);
-        assertThat(memberResponse.getId()).isNotNull();
-        assertThat(memberResponse.getEmail()).isEqualTo(EMAIL);
-        assertThat(memberResponse.getAge()).isEqualTo(AGE);
+        회원_정보_응답됨(memberResponse);
     }
 
     public MemberResponse myInfoWithBearerAuth(TokenResponse tokenResponse) {
@@ -121,5 +118,11 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                         log().all().
                         statusCode(HttpStatus.CREATED.value()).
                         extract().header("Location");
+    }
+
+    private void 회원_정보_응답됨(MemberResponse memberResponse) {
+        assertThat(memberResponse.getId()).isNotNull();
+        assertThat(memberResponse.getEmail()).isEqualTo(EMAIL);
+        assertThat(memberResponse.getAge()).isEqualTo(AGE);
     }
 }
