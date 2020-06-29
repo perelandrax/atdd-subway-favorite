@@ -1,8 +1,8 @@
-package nextstep.subway.auth.ui;
+package nextstep.subway.member.ui;
 
-import nextstep.subway.auth.application.MemberService;
-import nextstep.subway.auth.dto.MemberRequest;
-import nextstep.subway.auth.dto.MemberResponse;
+import nextstep.subway.member.application.MemberService;
+import nextstep.subway.member.dto.MemberRequest;
+import nextstep.subway.member.dto.MemberResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,20 +22,23 @@ public class MemberController {
         return ResponseEntity.created(URI.create("/members/" + member.getId())).build();
     }
 
-    @GetMapping("/members/{id}")
-    public ResponseEntity<MemberResponse> getMemberByEmail(@PathVariable Long id) {
-        MemberResponse member = memberService.findMemberById(id);
+    @GetMapping("/members/me")
+    public ResponseEntity<MemberResponse> getMemberOfMine() {
+        Long id = null;
+        MemberResponse member = memberService.findMember(id);
         return ResponseEntity.ok().body(member);
     }
 
-    @PutMapping("/members/{id}")
-    public ResponseEntity<MemberResponse> updateMember(@PathVariable Long id, @RequestBody MemberRequest param) {
+    @PutMapping("/members/me")
+    public ResponseEntity<MemberResponse> updateMemberOfMine(@RequestBody MemberRequest param) {
+        Long id = null;
         memberService.updateMember(id, param);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/members/{id}")
-    public ResponseEntity<MemberResponse> deleteMember(@PathVariable Long id) {
+    @DeleteMapping("/members/me")
+    public ResponseEntity<MemberResponse> deleteMemberOfMine() {
+        Long id = null;
         memberService.deleteMember(id);
         return ResponseEntity.noContent().build();
     }

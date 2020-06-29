@@ -1,4 +1,4 @@
-package nextstep.subway.auth.domain;
+package nextstep.subway.member.domain;
 
 import nextstep.subway.config.BaseEntity;
 

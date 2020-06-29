@@ -1,11 +1,10 @@
-package nextstep.subway.auth.acceptance;
+package nextstep.subway.member.acceptance;
 
 import io.restassured.RestAssured;
 import io.restassured.authentication.FormAuthConfig;
 import nextstep.subway.AcceptanceTest;
-import nextstep.subway.auth.dto.MemberResponse;
-import nextstep.subway.auth.dto.TokenResponse;
-import org.junit.jupiter.api.BeforeEach;
+import nextstep.subway.member.dto.MemberResponse;
+import nextstep.subway.member.dto.TokenResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -24,9 +23,17 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @DisplayName("Basic Auth")
     @Test
     void myInfoWithBasicAuth() {
-        createMember(EMAIL, PASSWORD, AGE);
+        회원_등록되어_있음(EMAIL, PASSWORD, AGE);
 
-        MemberResponse memberResponse = myInfoWithBasicAuth(EMAIL, PASSWORD);
+        MemberResponse memberResponse = RestAssured.given().log().all().
+                auth().preemptive().basic(EMAIL, PASSWORD).
+                accept(MediaType.APPLICATION_JSON_VALUE).
+                when().
+                get("/me/basic").
+                then().
+                log().all().
+                statusCode(HttpStatus.OK.value()).
+                extract().as(MemberResponse.class);
 
         assertThat(memberResponse.getId()).isNotNull();
         assertThat(memberResponse.getEmail()).isEqualTo(EMAIL);
@@ -37,9 +44,17 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @DisplayName("Session")
     @Test
     void myInfoWithSession() {
-        createMember(EMAIL, PASSWORD, AGE);
+        회원_등록되어_있음(EMAIL, PASSWORD, AGE);
 
-        MemberResponse memberResponse = myInfoWithSession(EMAIL, PASSWORD);
+        MemberResponse memberResponse = RestAssured.given().log().all().
+                auth().form(EMAIL, PASSWORD, new FormAuthConfig("/login", "email", "password")).
+                accept(MediaType.APPLICATION_JSON_VALUE).
+                when().
+                get("/me/session").
+                then().
+                log().all().
+                statusCode(HttpStatus.OK.value()).
+                extract().as(MemberResponse.class);
 
         assertThat(memberResponse.getId()).isNotNull();
         assertThat(memberResponse.getEmail()).isEqualTo(EMAIL);
@@ -49,39 +64,13 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @DisplayName("Bearer Auth")
     @Test
     void myInfoWithBearerAuth() {
-        createMember(EMAIL, PASSWORD, AGE);
+        회원_등록되어_있음(EMAIL, PASSWORD, AGE);
         TokenResponse tokenResponse = login(EMAIL, PASSWORD);
 
         MemberResponse memberResponse = myInfoWithBearerAuth(tokenResponse);
         assertThat(memberResponse.getId()).isNotNull();
         assertThat(memberResponse.getEmail()).isEqualTo(EMAIL);
         assertThat(memberResponse.getAge()).isEqualTo(AGE);
-    }
-
-    public MemberResponse myInfoWithBasicAuth(String email, String password) {
-        return
-                RestAssured.given().log().all().
-                        auth().preemptive().basic(email, password).
-                        accept(MediaType.APPLICATION_JSON_VALUE).
-                        when().
-                        get("/me/basic").
-                        then().
-                        log().all().
-                        statusCode(HttpStatus.OK.value()).
-                        extract().as(MemberResponse.class);
-    }
-
-    public MemberResponse myInfoWithSession(String email, String password) {
-        return
-                RestAssured.given().log().all().
-                        auth().form(email, password, new FormAuthConfig("/login", "email", "password")).
-                        accept(MediaType.APPLICATION_JSON_VALUE).
-                        when().
-                        get("/me/session").
-                        then().
-                        log().all().
-                        statusCode(HttpStatus.OK.value()).
-                        extract().as(MemberResponse.class);
     }
 
     public MemberResponse myInfoWithBearerAuth(TokenResponse tokenResponse) {
@@ -115,7 +104,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                         extract().as(TokenResponse.class);
     }
 
-    public String createMember(String email, String password, Integer age) {
+    public String 회원_등록되어_있음(String email, String password, Integer age) {
         Map<String, String> params = new HashMap<>();
         params.put("email", email);
         params.put("password", password);

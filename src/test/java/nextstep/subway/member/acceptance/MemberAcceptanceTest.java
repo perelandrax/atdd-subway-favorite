@@ -1,4 +1,4 @@
-package nextstep.subway.auth.acceptance;
+package nextstep.subway.member.acceptance;
 
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -6,7 +6,7 @@ import nextstep.subway.AcceptanceTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static nextstep.subway.auth.acceptance.step.MemberAcceptanceStep.*;
+import static nextstep.subway.member.acceptance.step.MemberAcceptanceStep.*;
 
 public class MemberAcceptanceTest extends AcceptanceTest {
     @DisplayName("회원가입을 한다.")
@@ -23,10 +23,10 @@ public class MemberAcceptanceTest extends AcceptanceTest {
     @Test
     void getMember() {
         // given
-        ExtractableResponse<Response> createdResponse = 회원_등록되어_있음("email@email.com", "password", 20);
+        회원_등록되어_있음("email@email.com", "password", 20);
 
         // when
-        ExtractableResponse<Response> response = 회원_정보_조회_요청(createdResponse);
+        ExtractableResponse<Response> response = 회원_정보_조회_요청();
 
         // then
         회원_정보_조회됨(response);
@@ -37,10 +37,10 @@ public class MemberAcceptanceTest extends AcceptanceTest {
     @Test
     void updateMember() {
         // given
-        ExtractableResponse<Response> createdResponse = 회원_등록되어_있음("email@email.com", "password", 20);
+        회원_등록되어_있음("email@email.com", "password", 20);
 
         // when
-        ExtractableResponse<Response> response = 회원_정보_수정_요청(createdResponse, "newemail@email.com", "newpassword", 20);
+        ExtractableResponse<Response> response = 회원_정보_수정_요청("newemail@email.com", "newpassword", 20);
 
         // then
         회원_정보_수정됨(response);
@@ -50,10 +50,10 @@ public class MemberAcceptanceTest extends AcceptanceTest {
     @Test
     void deleteMember() {
         // given
-        ExtractableResponse<Response> createdResponse = 회원_등록되어_있음("email@email.com", "password", 20);
+        회원_등록되어_있음("email@email.com", "password", 20);
 
         // when
-        ExtractableResponse<Response> response = 회원_삭제_요청(createdResponse);
+        ExtractableResponse<Response> response = 회원_삭제_요청();
 
         // then
         회원_삭제됨(response);

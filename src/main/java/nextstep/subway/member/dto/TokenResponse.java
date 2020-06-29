@@ -1,4 +1,4 @@
-package nextstep.subway.auth.dto;
+package nextstep.subway.member.dto;
 
 public class TokenResponse {
     private String accessToken;

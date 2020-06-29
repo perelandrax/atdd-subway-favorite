@@ -1,9 +1,9 @@
-package nextstep.subway.auth.application;
+package nextstep.subway.member.application;
 
-import nextstep.subway.auth.domain.Member;
-import nextstep.subway.auth.domain.MemberRepository;
-import nextstep.subway.auth.dto.MemberRequest;
-import nextstep.subway.auth.dto.MemberResponse;
+import nextstep.subway.member.domain.Member;
+import nextstep.subway.member.domain.MemberRepository;
+import nextstep.subway.member.dto.MemberRequest;
+import nextstep.subway.member.dto.MemberResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +21,7 @@ public class MemberService {
         return MemberResponse.of(member);
     }
 
-    public MemberResponse findMemberById(Long id) {
+    public MemberResponse findMember(Long id) {
         Member member = memberRepository.findById(id).orElseThrow(RuntimeException::new);
         return MemberResponse.of(member);
     }

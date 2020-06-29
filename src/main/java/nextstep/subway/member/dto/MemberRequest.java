@@ -1,6 +1,6 @@
-package nextstep.subway.auth.dto;
+package nextstep.subway.member.dto;
 
-import nextstep.subway.auth.domain.Member;
+import nextstep.subway.member.domain.Member;
 
 public class MemberRequest {
     private String email;

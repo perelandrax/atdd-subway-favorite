@@ -1,9 +1,9 @@
-package nextstep.subway.auth.application;
+package nextstep.subway.member.application;
 
-import nextstep.subway.auth.domain.Member;
-import nextstep.subway.auth.domain.MemberRepository;
-import nextstep.subway.auth.dto.MemberRequest;
-import nextstep.subway.auth.dto.MemberResponse;
+import nextstep.subway.member.domain.Member;
+import nextstep.subway.member.domain.MemberRepository;
+import nextstep.subway.member.dto.MemberRequest;
+import nextstep.subway.member.dto.MemberResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +41,7 @@ public class MemberServiceTest {
     void findById() {
         when(memberRepository.findById(anyLong())).thenReturn(Optional.of(new Member("email@email.com", "password", 30)));
 
-        MemberResponse memberResponse = memberService.findMemberById(1L);
+        MemberResponse memberResponse = memberService.findMember(1L);
         assertThat(memberResponse).isNotNull();
     }
 

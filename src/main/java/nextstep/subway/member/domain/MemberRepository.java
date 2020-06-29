@@ -1,4 +1,4 @@
-package nextstep.subway.auth.domain;
+package nextstep.subway.member.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

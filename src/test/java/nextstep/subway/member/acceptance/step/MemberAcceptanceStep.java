@@ -1,4 +1,4 @@
-package nextstep.subway.auth.acceptance.step;
+package nextstep.subway.member.acceptance.step;
 
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
@@ -32,21 +32,17 @@ public class MemberAcceptanceStep {
                 extract();
     }
 
-    public static ExtractableResponse<Response> 회원_정보_조회_요청(ExtractableResponse<Response> response) {
-        Long memberId = Long.parseLong(response.header("Location").split("/")[2]);
-
+    public static ExtractableResponse<Response> 회원_정보_조회_요청() {
         return RestAssured.given().log().all().
                 accept(MediaType.APPLICATION_JSON_VALUE).
                 when().
-                get("/members/{memberId}", memberId).
+                get("/members/me").
                 then().
                 log().all().
                 extract();
     }
 
-    public static ExtractableResponse<Response> 회원_정보_수정_요청(ExtractableResponse<Response> response, String email, String password, Integer age) {
-        Long memberId = Long.parseLong(response.header("Location").split("/")[2]);
-
+    public static ExtractableResponse<Response> 회원_정보_수정_요청(String email, String password, Integer age) {
         Map<String, String> params = new HashMap<>();
         params.put("email", email);
         params.put("password", password);
@@ -56,18 +52,16 @@ public class MemberAcceptanceStep {
                 contentType(MediaType.APPLICATION_JSON_VALUE).
                 body(params).
                 when().
-                put("/members/{memberId}", memberId).
+                put("/members/me").
                 then().
                 log().all().
                 extract();
     }
 
-    public static ExtractableResponse<Response> 회원_삭제_요청(ExtractableResponse<Response> response) {
-        Long memberId = Long.parseLong(response.header("Location").split("/")[2]);
-
+    public static ExtractableResponse<Response> 회원_삭제_요청() {
         return RestAssured.given().log().all().
                 when().
-                delete("/members/{memberId}", memberId).
+                delete("/members/me").
                 then().
                 log().all().
                 extract();
