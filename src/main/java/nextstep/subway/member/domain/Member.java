@@ -46,4 +46,11 @@ public class Member extends BaseEntity {
         this.password = member.password;
         this.age = member.age;
     }
+
+    public boolean checkPassword(String password) {
+        if (this.password == null || password == null) {
+            return false;
+        }
+        return this.password.equals(password);
+    }
 }
