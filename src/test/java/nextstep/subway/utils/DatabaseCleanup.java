@@ -1,7 +1,7 @@
 package nextstep.subway.utils;
 
 import com.google.common.base.CaseFormat;
-import nextstep.subway.station.domain.StationRepository;
+import nextstep.subway.maps.station.domain.StationRepository;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

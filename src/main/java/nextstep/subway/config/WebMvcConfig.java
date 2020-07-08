@@ -1,15 +1,15 @@
 package nextstep.subway.config;
 
-import nextstep.subway.auth.JwtTokenProvider;
-import nextstep.subway.auth.application.converter.BasicAuthAuthenticationConverter;
-import nextstep.subway.auth.application.converter.FormLoginAuthenticationConverter;
-import nextstep.subway.auth.application.provider.AuthenticationProvider;
-import nextstep.subway.auth.application.provider.UserDetailsService;
-import nextstep.subway.auth.ui.AuthenticationPrincipalArgumentResolver;
-import nextstep.subway.auth.ui.authentication.SessionAuthenticationInterceptor;
-import nextstep.subway.auth.ui.authentication.TokenAuthenticationInterceptor;
-import nextstep.subway.auth.ui.authorization.SessionSecurityContextInterceptor;
-import nextstep.subway.auth.ui.authorization.TokenSecurityContextInterceptor;
+import nextstep.subway.auths.JwtTokenProvider;
+import nextstep.subway.auths.application.converter.BasicAuthAuthenticationConverter;
+import nextstep.subway.auths.application.converter.FormLoginAuthenticationConverter;
+import nextstep.subway.auths.application.provider.AuthenticationProvider;
+import nextstep.subway.auths.application.provider.UserDetailsService;
+import nextstep.subway.auths.ui.AuthenticationPrincipalArgumentResolver;
+import nextstep.subway.auths.ui.authentication.SessionAuthenticationInterceptor;
+import nextstep.subway.auths.ui.authentication.TokenAuthenticationInterceptor;
+import nextstep.subway.auths.ui.authorization.SessionSecurityContextInterceptor;
+import nextstep.subway.auths.ui.authorization.TokenSecurityContextInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

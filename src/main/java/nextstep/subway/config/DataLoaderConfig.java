@@ -1,11 +1,11 @@
 package nextstep.subway.config;
 
 import com.google.common.collect.Lists;
-import nextstep.subway.line.domain.Line;
-import nextstep.subway.line.domain.LineRepository;
-import nextstep.subway.line.domain.LineStation;
-import nextstep.subway.station.domain.Station;
-import nextstep.subway.station.domain.StationRepository;
+import nextstep.subway.maps.line.domain.Line;
+import nextstep.subway.maps.line.domain.LineRepository;
+import nextstep.subway.maps.line.domain.LineStation;
+import nextstep.subway.maps.station.domain.Station;
+import nextstep.subway.maps.station.domain.StationRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
