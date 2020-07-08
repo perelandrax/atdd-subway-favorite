@@ -1,4 +1,4 @@
-package nextstep.subway.auth;
+package nextstep.subway.auths;
 
 import org.apache.logging.log4j.util.Strings;
 

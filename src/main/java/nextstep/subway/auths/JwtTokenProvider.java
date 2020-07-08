@@ -1,4 +1,4 @@
-package nextstep.subway.auth;
+package nextstep.subway.auths;
 
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;

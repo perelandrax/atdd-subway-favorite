@@ -1,9 +1,9 @@
-package nextstep.subway.auth.ui.authentication;
+package nextstep.subway.auths.ui.authentication;
 
-import nextstep.subway.auth.application.context.Authentication;
-import nextstep.subway.auth.application.converter.AuthenticationConverter;
-import nextstep.subway.auth.application.converter.AuthenticationToken;
-import nextstep.subway.auth.application.provider.AuthenticationProvider;
+import nextstep.subway.auths.application.context.Authentication;
+import nextstep.subway.auths.application.converter.AuthenticationConverter;
+import nextstep.subway.auths.application.converter.AuthenticationToken;
+import nextstep.subway.auths.application.provider.AuthenticationProvider;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;

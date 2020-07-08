@@ -1,7 +1,7 @@
-package nextstep.subway.auth.application.provider;
+package nextstep.subway.auths.application.provider;
 
-import nextstep.subway.auth.application.context.Authentication;
-import nextstep.subway.auth.application.converter.AuthenticationToken;
+import nextstep.subway.auths.application.context.Authentication;
+import nextstep.subway.auths.application.converter.AuthenticationToken;
 
 public class AuthenticationProvider {
     private UserDetailsService userDetailsService;

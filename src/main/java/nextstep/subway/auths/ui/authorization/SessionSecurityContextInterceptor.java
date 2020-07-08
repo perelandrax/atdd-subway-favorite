@@ -1,12 +1,12 @@
-package nextstep.subway.auth.ui.authorization;
+package nextstep.subway.auths.ui.authorization;
 
-import nextstep.subway.auth.application.context.SecurityContext;
-import nextstep.subway.auth.application.context.SecurityContextHolder;
+import nextstep.subway.auths.application.context.SecurityContext;
+import nextstep.subway.auths.application.context.SecurityContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static nextstep.subway.auth.application.context.SecurityContextHolder.SECURITY_CONTEXT;
+import static nextstep.subway.auths.application.context.SecurityContextHolder.SECURITY_CONTEXT;
 
 public class SessionSecurityContextInterceptor extends SecurityContextInterceptor {
 

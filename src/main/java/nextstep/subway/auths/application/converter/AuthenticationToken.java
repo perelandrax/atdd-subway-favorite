@@ -1,4 +1,4 @@
-package nextstep.subway.auth.application.converter;
+package nextstep.subway.auths.application.converter;
 
 public class AuthenticationToken {
     private String principal;

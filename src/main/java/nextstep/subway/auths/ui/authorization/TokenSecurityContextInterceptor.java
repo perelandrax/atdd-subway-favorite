@@ -1,13 +1,13 @@
-package nextstep.subway.auth.ui.authorization;
+package nextstep.subway.auths.ui.authorization;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nextstep.subway.auth.AuthorizationExtractor;
-import nextstep.subway.auth.AuthorizationType;
-import nextstep.subway.auth.JwtTokenProvider;
-import nextstep.subway.auth.application.context.Authentication;
-import nextstep.subway.auth.application.context.SecurityContext;
-import nextstep.subway.auth.application.context.SecurityContextHolder;
+import nextstep.subway.auths.AuthorizationExtractor;
+import nextstep.subway.auths.AuthorizationType;
+import nextstep.subway.auths.JwtTokenProvider;
+import nextstep.subway.auths.application.context.Authentication;
+import nextstep.subway.auths.application.context.SecurityContext;
+import nextstep.subway.auths.application.context.SecurityContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

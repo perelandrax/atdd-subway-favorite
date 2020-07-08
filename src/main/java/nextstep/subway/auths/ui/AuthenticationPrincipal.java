@@ -1,4 +1,4 @@
-package nextstep.subway.auth.ui;
+package nextstep.subway.auths.ui;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

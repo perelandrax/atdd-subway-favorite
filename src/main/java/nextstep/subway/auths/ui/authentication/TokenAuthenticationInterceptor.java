@@ -1,11 +1,11 @@
-package nextstep.subway.auth.ui.authentication;
+package nextstep.subway.auths.ui.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nextstep.subway.auth.JwtTokenProvider;
-import nextstep.subway.auth.application.context.Authentication;
-import nextstep.subway.auth.application.converter.AuthenticationConverter;
-import nextstep.subway.auth.application.provider.AuthenticationProvider;
-import nextstep.subway.auth.dto.TokenResponse;
+import nextstep.subway.auths.JwtTokenProvider;
+import nextstep.subway.auths.application.context.Authentication;
+import nextstep.subway.auths.application.converter.AuthenticationConverter;
+import nextstep.subway.auths.application.provider.AuthenticationProvider;
+import nextstep.subway.auths.dto.TokenResponse;
 import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,6 +1,6 @@
-package nextstep.subway.auth.ui.authorization;
+package nextstep.subway.auths.ui.authorization;
 
-import nextstep.subway.auth.application.context.SecurityContextHolder;
+import nextstep.subway.auths.application.context.SecurityContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;

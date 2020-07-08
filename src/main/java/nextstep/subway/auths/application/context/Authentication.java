@@ -1,4 +1,4 @@
-package nextstep.subway.auth.application.context;
+package nextstep.subway.auths.application.context;
 
 public class Authentication {
     private Object principal;

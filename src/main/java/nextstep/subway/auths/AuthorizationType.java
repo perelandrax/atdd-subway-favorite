@@ -1,4 +1,4 @@
-package nextstep.subway.auth;
+package nextstep.subway.auths;
 
 public enum AuthorizationType {
     BASIC,

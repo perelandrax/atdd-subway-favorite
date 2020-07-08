@@ -1,7 +1,7 @@
-package nextstep.subway.auth.application.converter;
+package nextstep.subway.auths.application.converter;
 
-import nextstep.subway.auth.AuthorizationExtractor;
-import nextstep.subway.auth.AuthorizationType;
+import nextstep.subway.auths.AuthorizationExtractor;
+import nextstep.subway.auths.AuthorizationType;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
