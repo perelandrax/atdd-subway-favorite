@@ -16,6 +16,8 @@ import org.springframework.test.context.ContextConfiguration;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @ContextConfiguration(classes = SubwayApplication.class)
 public class AuthAcceptanceTest extends AcceptanceTest {
     private static final String EMAIL = "email@email.com";
@@ -31,12 +33,11 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 auth().form(EMAIL, PASSWORD, new FormAuthConfig("/login/session", "principal", "credentials")).
                 accept(MediaType.APPLICATION_JSON_VALUE).
                 when().
-                get("/me").
+                get("/members/me").
                 then().
                 log().all().
                 statusCode(HttpStatus.OK.value()).
                 extract();
-
     }
 
     @DisplayName("Bearer Auth")
@@ -54,7 +55,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 auth().oauth2(tokenResponse.getAccessToken()).
                 accept(MediaType.APPLICATION_JSON_VALUE).
                 when().
-                get("/me").
+                get("/members/me").
                 then().
                 log().all().
                 statusCode(HttpStatus.OK.value()).
@@ -62,10 +63,6 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     }
 
     public TokenResponse login(String email, String password) {
-//        Map<String, String> params = new HashMap<>();
-//        params.put("email", email);
-//        params.put("password", password);
-
         return RestAssured.given().log().all().
                 auth().preemptive().basic(email, password).
                 accept(MediaType.APPLICATION_JSON_VALUE).
@@ -97,9 +94,6 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     }
 
     private void 회원_정보_응답됨(ExtractableResponse<Response> response) {
-//        response.as()
-//        assertThat(memberResponse.getId()).isNotNull();
-//        assertThat(memberResponse.getEmail()).isEqualTo(EMAIL);
-//        assertThat(memberResponse.getAge()).isEqualTo(AGE);
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK);
     }
 }

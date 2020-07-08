@@ -1,6 +1,7 @@
-package nextstep.subway.member.dto;
+package nextstep.subway.members.member.dto;
 
-import nextstep.subway.member.domain.Member;
+
+import nextstep.subway.members.member.domain.Member;
 
 public class MemberResponse {
     private Long id;

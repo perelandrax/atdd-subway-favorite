@@ -1,6 +1,6 @@
-package nextstep.subway.member.domain;
+package nextstep.subway.members.member.domain;
 
-import nextstep.subway.auth.application.provider.UserDetails;
+import nextstep.subway.auths.application.provider.UserDetails;
 
 public class LoginMember implements UserDetails {
     private Long id;

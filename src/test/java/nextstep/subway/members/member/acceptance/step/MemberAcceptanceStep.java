@@ -1,8 +1,9 @@
-package nextstep.subway.member.acceptance.step;
+package nextstep.subway.members.member.acceptance.step;
 
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import nextstep.subway.auths.dto.TokenResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
@@ -14,6 +15,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MemberAcceptanceStep {
     public static ExtractableResponse<Response> 회원_등록되어_있음(String email, String password, Integer age) {
         return 회원_생성을_요청(email, password, age);
+    }
+
+    public static TokenResponse 로그인_되어_있음(String email, String password) {
+        return RestAssured.given().log().all().
+                auth().preemptive().basic(email, password).
+                accept(MediaType.APPLICATION_JSON_VALUE).
+                when().
+                post("/login/token").
+                then().
+                log().all().
+                statusCode(HttpStatus.OK.value()).
+                extract().as(TokenResponse.class);
     }
 
     public static ExtractableResponse<Response> 회원_생성을_요청(String email, String password, Integer age) {
@@ -32,8 +45,9 @@ public class MemberAcceptanceStep {
                 extract();
     }
 
-    public static ExtractableResponse<Response> 회원_정보_조회_요청() {
+    public static ExtractableResponse<Response> 회원_정보_조회_요청(TokenResponse tokenResponse) {
         return RestAssured.given().log().all().
+                auth().oauth2(tokenResponse.getAccessToken()).
                 accept(MediaType.APPLICATION_JSON_VALUE).
                 when().
                 get("/members/me").
@@ -42,13 +56,14 @@ public class MemberAcceptanceStep {
                 extract();
     }
 
-    public static ExtractableResponse<Response> 회원_정보_수정_요청(String email, String password, Integer age) {
+    public static ExtractableResponse<Response> 회원_정보_수정_요청(TokenResponse tokenResponse, String email, String password, Integer age) {
         Map<String, String> params = new HashMap<>();
         params.put("email", email);
         params.put("password", password);
         params.put("age", age + "");
 
         return RestAssured.given().log().all().
+                auth().oauth2(tokenResponse.getAccessToken()).
                 contentType(MediaType.APPLICATION_JSON_VALUE).
                 body(params).
                 when().
@@ -58,8 +73,9 @@ public class MemberAcceptanceStep {
                 extract();
     }
 
-    public static ExtractableResponse<Response> 회원_삭제_요청() {
+    public static ExtractableResponse<Response> 회원_삭제_요청(TokenResponse tokenResponse) {
         return RestAssured.given().log().all().
+                auth().oauth2(tokenResponse.getAccessToken()).
                 when().
                 delete("/members/me").
                 then().
