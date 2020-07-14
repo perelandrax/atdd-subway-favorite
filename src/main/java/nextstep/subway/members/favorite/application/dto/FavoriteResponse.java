@@ -1,43 +1,35 @@
 package nextstep.subway.members.favorite.application.dto;
 
+import nextstep.subway.maps.station.dto.StationResponse;
 import nextstep.subway.members.favorite.domain.Favorite;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class FavoriteResponse {
     private Long id;
-    private Long sourceStationId;
-    private Long targetStationId;
+    private StationResponse source;
+    private StationResponse target;
 
     public FavoriteResponse() {
     }
 
-    public FavoriteResponse(Long id, Long sourceStationId, Long targetStationId) {
+    public FavoriteResponse(Long id, StationResponse source, StationResponse target) {
         this.id = id;
-        this.sourceStationId = sourceStationId;
-        this.targetStationId = targetStationId;
+        this.source = source;
+        this.target = target;
     }
 
-    public static List<FavoriteResponse> listOf(List<Favorite> favorites) {
-        return favorites.stream()
-                .map(it -> FavoriteResponse.of(it))
-                .collect(Collectors.toList());
-    }
-
-    private static FavoriteResponse of(Favorite favorite) {
-        return new FavoriteResponse(favorite.getId(), favorite.getSourceStationId(), favorite.getTargetStationId());
+    public static FavoriteResponse of(Favorite favorite, StationResponse source, StationResponse target) {
+        return new FavoriteResponse(favorite.getId(), source, target);
     }
 
     public Long getId() {
         return id;
     }
 
-    public Long getSourceStationId() {
-        return sourceStationId;
+    public StationResponse getSource() {
+        return source;
     }
 
-    public Long getTargetStationId() {
-        return targetStationId;
+    public StationResponse getTarget() {
+        return target;
     }
 }
