@@ -22,7 +22,6 @@ class FavoriteServiceTest {
 
     private Station 강남역;
     private Station 양재역;
-    private Station 남부터미널역;
 
     private Member A유저;
     private Member B유저;
@@ -42,14 +41,11 @@ class FavoriteServiceTest {
     void setUp() {
         강남역 = new Station("강남역");
         양재역 = new Station("양재역");
-        남부터미널역 = new Station("남부터미널역");
 
         A유저 = new Member("a_user@gmail.com", "test1234", 20);
         B유저 = new Member("b_user@gmail.com", "test1234", 30);
         ReflectionTestUtils.setField(A유저, "id", 1L);
         ReflectionTestUtils.setField(B유저, "id", 2L);
-
-        즐겨찾기1 = favoriteRepository.save(new Favorite(A유저.getId(), 강남역, 양재역));
     }
 
     @Test
@@ -57,6 +53,8 @@ class FavoriteServiceTest {
         // given
         stationRepository.save(강남역);
         stationRepository.save(양재역);
+
+        즐겨찾기1 = favoriteRepository.save(new Favorite(A유저.getId(), 강남역, 양재역));
 
         // when & then
         assertThatThrownBy(() -> favoriteService.deleteFavorite(A유저.getId(), 10L))
@@ -68,6 +66,8 @@ class FavoriteServiceTest {
         // given
         stationRepository.save(강남역);
         stationRepository.save(양재역);
+
+        즐겨찾기1 = favoriteRepository.save(new Favorite(A유저.getId(), 강남역, 양재역));
 
         // when & then
         assertThatThrownBy(() -> favoriteService.deleteFavorite(B유저.getId(), 즐겨찾기1.getId()))
