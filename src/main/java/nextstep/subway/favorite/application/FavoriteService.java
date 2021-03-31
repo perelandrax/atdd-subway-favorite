@@ -39,6 +39,8 @@ public class FavoriteService {
     }
 
     public void deleteFavorite(Long memberId, Long favoriteId) {
+        Favorite test = favoriteRepository.findAll().get(0);
+
         Favorite favorite = favoriteRepository.findById(favoriteId).orElseThrow(() -> new RuntimeException());
         if (!favorite.isOwner(memberId)) {
             throw new UnauthorizedException();

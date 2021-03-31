@@ -3,12 +3,10 @@ package nextstep.subway.favorite.application;
 import nextstep.subway.auth.exception.UnauthorizedException;
 import nextstep.subway.favorite.domain.Favorite;
 import nextstep.subway.favorite.domain.FavoriteRepository;
-import nextstep.subway.favorite.dto.FavoriteRequest;
-import nextstep.subway.line.domain.Line;
 import nextstep.subway.member.domain.Member;
 import nextstep.subway.station.domain.Station;
 import nextstep.subway.station.domain.StationRepository;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
@@ -31,7 +28,6 @@ class FavoriteServiceTest {
     private Member B유저;
 
     private Favorite 즐겨찾기1;
-    private Favorite 즐겨찾기2;
 
     @Autowired
     private StationRepository stationRepository;
@@ -53,8 +49,7 @@ class FavoriteServiceTest {
         ReflectionTestUtils.setField(A유저, "id", 1L);
         ReflectionTestUtils.setField(B유저, "id", 2L);
 
-        즐겨찾기1 = new Favorite(A유저.getId(), 강남역, 양재역);
-        즐겨찾기2 = new Favorite(A유저.getId(), 양재역, 남부터미널역);
+        즐겨찾기1 = favoriteRepository.save(new Favorite(A유저.getId(), 강남역, 양재역));
     }
 
     @Test
@@ -62,10 +57,9 @@ class FavoriteServiceTest {
         // given
         stationRepository.save(강남역);
         stationRepository.save(양재역);
-        favoriteRepository.save(즐겨찾기1);
 
         // when & then
-        assertThatThrownBy(() -> favoriteService.deleteFavorite(A유저.getId(), 즐겨찾기2.getId()))
+        assertThatThrownBy(() -> favoriteService.deleteFavorite(A유저.getId(), 10L))
                 .isInstanceOf(RuntimeException.class);
     }
 
@@ -74,7 +68,6 @@ class FavoriteServiceTest {
         // given
         stationRepository.save(강남역);
         stationRepository.save(양재역);
-        favoriteRepository.save(즐겨찾기1);
 
         // when & then
         assertThatThrownBy(() -> favoriteService.deleteFavorite(B유저.getId(), 즐겨찾기1.getId()))
